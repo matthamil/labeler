@@ -49,10 +49,17 @@ const hasLabelWithRequiredPrefix = (labels: string[]): boolean => {
   })
 }
 
-const hasDefaultLabels = (labels: string[]): boolean => {
-  return labels.some((label: string) => {
-    return DEFAULT_LABELS.some((defaultLabel) => label === defaultLabel)
-  })
+const getMissingDefaultLabels = (labels: string[]): string[] => {
+  const currentLabels = new Set(labels)
+  const defaultLabels = new Set(DEFAULT_LABELS)
+  const missingLabels = new Set<string>()
+
+  for (const defaultLabel of defaultLabels) {
+    if (!currentLabels.has(defaultLabel)) {
+      missingLabels.add(defaultLabel)
+    }
+  }
+  return Array.from(missingLabels)
 }
 
 async function main(): Promise<string> {
@@ -103,11 +110,13 @@ async function main(): Promise<string> {
     return `No action being taken for #${issueNumber}. Required label already present.`
   }
 
-  if (hasDefaultLabels(labels)) {
+  const missingLabels = getMissingDefaultLabels(labels)
+
+  if (missingLabels.length === 0) {
     return `No action being taken for #${issueNumber}. Default label(s) already present.`
   }
 
-  const updatedLabels = [...new Set(labels.concat(DEFAULT_LABELS))]
+  const updatedLabels = [...new Set(labels.concat(missingLabels))]
 
   await octokit.rest.issues.update({
     owner: OWNER_NAME,

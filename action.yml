@@ -1,4 +1,4 @@
-name: '@matthamil/labeler'
+name: 'matthamil/labeler'
 description: 'Require specific labels to always be present on Issues and Pull Requests'
 author: 'Matt Hamil'
 branding:

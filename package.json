@@ -1,6 +1,6 @@
 {
   "name": "@matthamil/labeler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "description": "Require specific labels to always be present on Issues and Pull Requests",
   "main": "lib/main.js",

@@ -74,10 +74,16 @@ const hasLabelWithRequiredPrefix = (labels) => {
         REQUIRED_LABEL_PREFIXES.some((requiredLabelPrefix) => label.startsWith(requiredLabelPrefix));
     });
 };
-const hasDefaultLabels = (labels) => {
-    return labels.some((label) => {
-        return DEFAULT_LABELS.some((defaultLabel) => label === defaultLabel);
-    });
+const getMissingDefaultLabels = (labels) => {
+    const currentLabels = new Set(labels);
+    const defaultLabels = new Set(DEFAULT_LABELS);
+    const missingLabels = new Set();
+    for (const defaultLabel of defaultLabels) {
+        if (!currentLabels.has(defaultLabel)) {
+            missingLabels.add(defaultLabel);
+        }
+    }
+    return Array.from(missingLabels);
 };
 function main() {
     var _a, _b, _c, _d, _e, _f, _g;
@@ -119,10 +125,11 @@ function main() {
         if (hasLabelWithRequiredPrefix(labels)) {
             return `No action being taken for #${issueNumber}. Required label already present.`;
         }
-        if (hasDefaultLabels(labels)) {
+        const missingLabels = getMissingDefaultLabels(labels);
+        if (missingLabels.length === 0) {
             return `No action being taken for #${issueNumber}. Default label(s) already present.`;
         }
-        const updatedLabels = [...new Set(labels.concat(DEFAULT_LABELS))];
+        const updatedLabels = [...new Set(labels.concat(missingLabels))];
         yield octokit.rest.issues.update({
             owner: OWNER_NAME,
             repo: REPO_NAME,
