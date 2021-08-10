@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ensure Default Label is Present
-        uses: matthamil/labeler@main
+        uses: matthamil/labeler@v1.0.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           required-label-prefixes: 'Priority: '
@@ -36,15 +36,14 @@ jobs:
 ```
 ## Publishing
 
-Actions are run from GitHub repos so the `dist` directory should be checked into git. 
+Increment the version number in the `package.json` and run the following:
 
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
 ```bash
-npm run package
-git add dist
-git commit -a -m "prod dependencies"
-git push origin releases/v1
+npm run build && npm run package
 ```
+
+Commit the changes to the repository and push to `main`.
+
 ## Attributions
 
 This project was heavily inspired by [andymckay/labeler](https://github.com/andymckay/labeler).
