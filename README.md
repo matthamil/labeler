@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ensure Default Label is Present
-        uses: matthamil/labeler@main
+        uses: @matthamil/labeler@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           required-label-prefixes: 'Priority: '
