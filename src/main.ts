@@ -17,6 +17,10 @@ const DEFAULT_LABELS = getListInput('default-labels', {
   required: true,
   trimWhitespace: false,
 })
+const ISSUE_NUMBER = core.getInput('issue-number', {
+  required: false,
+  trimWhitespace: false,
+})
 
 /**
  * @description
@@ -25,6 +29,12 @@ const DEFAULT_LABELS = getListInput('default-labels', {
 const getIssueNumber = (
   payload: typeof github.context.payload,
 ): number | undefined => {
+  // Most users will likely never pass an `issue-number`. This is used
+  // internally to test that this action is working.
+  if (ISSUE_NUMBER !== '' && !isNaN(Number(ISSUE_NUMBER))) {
+    return Number(ISSUE_NUMBER)
+  }
+
   const issueNumber = payload.issue && payload.issue.issueNumber
   if (issueNumber) {
     return issueNumber

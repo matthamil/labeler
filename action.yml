@@ -17,6 +17,9 @@ inputs:
   default-labels:
     required: true
     description: 'Comma-delimited list of labels that be present on an Issue if no labels are found that have the required-label-prefix'
+  issue-number:
+    required: false
+    description: 'If you want to only check a specific GitHub issue for specific labels to be present'
 runs:
   using: 'node12'
   main: 'dist/index.js'
