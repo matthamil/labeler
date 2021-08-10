@@ -1,6 +1,9 @@
 name: '@matthamil/labeler'
 description: 'Require specific labels to always be present on Issues and Pull Requests'
 author: 'Matt Hamil'
+branding:
+  icon: 'bookmark'
+  color: 'blue'
 inputs:
   # Required for to make changes to Issues and Pull Requests
   github-token:
