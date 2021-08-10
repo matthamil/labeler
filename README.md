@@ -1,3 +1,7 @@
+# WIP
+
+This action, while published to the Marketplace, is a WIP. Expect buggy behavior for now.
+
 # @matthamil/labeler
 
 GitHub action that can automatically add `default-labels` to Issues and Pull Requests if a label with a specific prefix (`required-label-prefix`) is not present.
