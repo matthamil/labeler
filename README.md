@@ -1,85 +1,49 @@
-<p align="center">
-  <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
-</p>
+# @matthamil/labeler
 
-# Create a JavaScript Action using TypeScript
+GitHub action that can automatically add `default-labels` to Issues and Pull Requests if a label with a specific prefix (`required-label-prefix`) is not present.
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
+## Supported GitHub Events
 
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.  
+* `issues`
+* `pull_request`
+* `project_card`
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+## Usage
 
-## Create an action from this template
+The following example ensures that the `Priority: Unknown` label is always present on any issue or project card that does not already have a label that starts with `Priority: `.
 
-Click the `Use this Template` and provide the new repo details for your action
+> This action does *not* ensure that only one label exists that matches a `required-label-prefixes`. This is on my list of features to implement.
 
-## Code in Main
+```yml
+name: issue-labeler
 
-> First, you'll need to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
+on:
+  issues:
+    types: [opened, edited]
+  project_card:
+    types: [moved]
 
-Install the dependencies  
-```bash
-$ npm install
+jobs:
+  automate-issues-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure Default Label is Present
+        uses: matthamil/labeler@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          required-label-prefixes: 'Priority: '
+          default-labels: 'Priority: Unknown'
 ```
+## Publishing
 
-Build the typescript and package it for distribution
-```bash
-$ npm run build && npm run package
-```
-
-Run the tests :heavy_check_mark:  
-```bash
-$ npm test
-
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-
-...
-```
-
-## Change action.yml
-
-The action.yml contains defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-import * as core from '@actions/core';
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
-
-## Publish to a distribution branch
-
-Actions are run from GitHub repos so we will checkin the packed dist folder. 
+Actions are run from GitHub repos so the `dist` directory should be checked into git. 
 
 Then run [ncc](https://github.com/zeit/ncc) and push the results:
 ```bash
-$ npm run package
-$ git add dist
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
+npm run package
+git add dist
+git commit -a -m "prod dependencies"
+git push origin releases/v1
 ```
 
 Note: We recommend using the `--license` option for ncc, which will create a license file for all of the production node modules used in your project.
@@ -88,18 +52,10 @@ Your action is now published! :rocket:
 
 See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
 
-## Validate
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
-
-```yaml
-uses: ./
-with:
-  milliseconds: 1000
-```
-
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
-
 ## Usage:
 
 After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+
+## Attributions
+
+This project was heavily inspired by [andymckay/labeler](https://github.com/andymckay/labeler).

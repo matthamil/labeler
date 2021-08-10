@@ -1,11 +1,19 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: '@matthamil/labeler'
+description: 'Require specific labels to always be present on Issues and Pull Requests'
+author: 'Matt Hamil'
 inputs:
-  milliseconds: # change this
+  # Required for to make changes to Issues and Pull Requests
+  github-token:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'GitHub token'
+  # If you require all Issues to be labeled with a "Priority: *" label,
+  # your required-label-prefixes should be ["Priority: "]
+  required-label-prefixes:
+    required: true
+    description: 'Comma-delimited list of label prefixes for the required label(s)'
+  default-labels:
+    required: true
+    description: 'Comma-delimited list of labels that be present on an Issue if no labels are found that have the required-label-prefix'
 runs:
   using: 'node12'
   main: 'dist/index.js'

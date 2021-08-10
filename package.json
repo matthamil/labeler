@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
-  "private": true,
-  "description": "TypeScript template action",
+  "name": "@matthamil/labeler",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Require specific labels to always be present on Issues and Pull Requests",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -10,22 +10,31 @@
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/matthamil/labeler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/matthamil/labeler/issues"
   },
   "keywords": [
-    "actions",
-    "node",
-    "setup"
+    "github",
+    "action",
+    "required",
+    "labels"
   ],
-  "author": "",
+  "author": {
+    "name": "Matt Hamil",
+    "email": "j.matthew.hamil@gmail.com",
+    "url": "https://matthamil.me"
+  },
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.4.0"
+    "@actions/core": "^1.4.0",
+    "@actions/github": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "^16.3.3",
