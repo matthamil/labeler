@@ -14,7 +14,7 @@ For example, assume you have a GitHub repo with labels: `Priority: High`, `Prior
 
 The following example ensures that the `Priority: Unknown` label is always present on any issue or project card that does not already have a label that starts with `Priority: `.
 
-> This action does *not* ensure that only one label exists that matches a `required-label-prefixes`. This is on my list of features to implement.
+> This action does *not* ensure that only one label exists that matches a `required-label-prefixes`. For example, it is possible for a user to add both the "Priority: Medium" and "Priority: High" labels to the same Issue/Pull Request/Project Card when only one "Priority: *" label should be present. This constraint is on my list of features to implement.
 
 ```yml
 name: issue-labeler
