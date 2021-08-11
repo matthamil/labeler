@@ -79,9 +79,14 @@ const getIssueNumber = (payload) => {
     return issueNumberFromCard;
 };
 const hasLabelWithRequiredPrefix = (labels) => {
-    return labels.some((label) => {
-        REQUIRED_LABEL_PREFIXES.some((requiredLabelPrefix) => label.startsWith(requiredLabelPrefix));
-    });
+    for (const label of labels) {
+        for (const requiredLabelPrefix of REQUIRED_LABEL_PREFIXES) {
+            if (label.startsWith(requiredLabelPrefix)) {
+                return true;
+            }
+        }
+    }
+    return false;
 };
 const getMissingDefaultLabels = (labels) => {
     const currentLabels = new Set(labels);
