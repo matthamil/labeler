@@ -35,7 +35,7 @@ const getIssueNumber = (
     return Number(ISSUE_NUMBER)
   }
 
-  const issueNumber = payload.issue && payload.issue.issueNumber
+  const issueNumber = payload.issue && payload.issue.number
   if (issueNumber) {
     return issueNumber
   }

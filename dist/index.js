@@ -66,7 +66,7 @@ const getIssueNumber = (payload) => {
     if (ISSUE_NUMBER !== '' && !isNaN(Number(ISSUE_NUMBER))) {
         return Number(ISSUE_NUMBER);
     }
-    const issueNumber = payload.issue && payload.issue.issueNumber;
+    const issueNumber = payload.issue && payload.issue.number;
     if (issueNumber) {
         return issueNumber;
     }
