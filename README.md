@@ -2,6 +2,8 @@
 
 GitHub action that can automatically add `default-labels` to Issues and Pull Requests if a label with a specific prefix (`required-label-prefix`) is not present.
 
+For example, assume you have a GitHub repo with labels: `Priority: High`, `Priority: Medium`, `Priority: Low`, and `Priority: Unknown`. This GitHub action will allow you to automatically add the `Priority: Unknown` label when any other `Priority: *` label is not present on an issue, pull request, or project card.
+
 ## Supported GitHub Events
 
 * `issues`
